@@ -6,7 +6,7 @@ def list_customers():
     view.print_error_message("Not implemented yet.")
 
 
-def add_customer():
+def add_customer(): #wywołanie na funkcji view.get_inputs na labelach z pliku crm.py
     view.print_error_message("Not implemented yet.")
 
 
