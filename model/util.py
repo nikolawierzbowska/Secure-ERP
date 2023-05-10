@@ -1,25 +1,14 @@
 import random
-import string
 
 
-def generate_id(number_of_small_letters=4,
-                number_of_capital_letters=2,
-                number_of_digits=2,
-                number_of_special_chars=2,
-                allowed_special_chars=r"_+-!"):
-    return 'T!uq6-b4Yq'
+def generate_id():
+    number_of_special_chars = ["_", "+", "-", "!"]
+    small_letters_list = [chr(random.randint(97, 122)) for _ in range(4)]
+    capital_letters_list = [chr(random.randint(65, 90)) for _ in range(2)]
+    digits_list = [str(random.randint(0, 10)) for _ in range(2)]
+    special_chars_list = [str(random.choice(number_of_special_chars)) for _ in range(2)]
+    list_of_elements = small_letters_list + capital_letters_list + digits_list + special_chars_list
+    shuffled_list = random.sample(list_of_elements, len(list_of_elements))
+    generated_id = "".join(shuffled_list)
+    return generated_id
 
-def random_small_letters():
-    pass
-
-def random_capital_letters():
-    pass
-
-def random_digits():
-    pass
-
-def random_special_chars():
-    pass
-
-def get_unique_id():
-    pass
