@@ -48,7 +48,20 @@ def print_table(table):
     Args:
         table: list of lists - the table to print out
     """
-    pass
+    data = "pF5v4wGe;Dr. Strangelove;strangelove@rgv453.grer;1\nk0_JUq+8hk;Kim;supremeleader@dfs.vfsdfv;0\nl4x__QmU8r;Unknown;---;0\nP7+5Ggza!n;Known;ping@me;1"
+
+    rows = data.split("\n")
+    headers = ["id", "name", "email", "status"]
+
+    max_lengths = [max([len(row.split(";")[i]) for row in rows]) + 2 for i in range(len(headers))]
+
+    print("|".join([headers[i].ljust(max_lengths[i]) for i in range(len(headers))]))
+    print("-" * sum(max_lengths))
+
+    for row in rows:
+        columns = row.split(";")
+    print("|".join([columns[i].ljust(max_lengths[i]) for i in range(len(columns))]))
+
 
 
 def get_input(label):
