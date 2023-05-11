@@ -32,7 +32,8 @@ def print_general_results(result, label):
     lists/tuples (like "@label: \n  @item1; @item2"), and dictionaries
     (like "@label \n  @key1: @value1; @key2: @value2")
     """
-    pass
+    print(label)
+    print(result)
 
 
 # /--------------------------------\
@@ -42,26 +43,28 @@ def print_general_results(result, label):
 # |--------|------------|----------|
 # |   1    | Sidewinder | missile  |
 # \-----------------------------------/
-def print_table(table):
+def print_table(table,headers):
     """Prints tabular data like above.
 
     Args:
         table: list of lists - the table to print out
     """
-    data = "pF5v4wGe;Dr. Strangelove;strangelove@rgv453.grer;1\nk0_JUq+8hk;Kim;supremeleader@dfs.vfsdfv;0\nl4x__QmU8r;Unknown;---;0\nP7+5Ggza!n;Known;ping@me;1"
 
-    rows = data.split("\n")
-    headers = ["id", "name", "email", "status"]
+    column_widths = []
+    for col in range(len(headers)):
+        record_widths = []
+        for row in range(len(table)):
+            record_widths.append(len(table[row][col]))
+        column_widths.append(max(record_widths) +2 )
 
-    max_lengths = [max([len(row.split(";")[i]) for row in rows]) + 2 for i in range(len(headers))]
-
-    print("|".join([headers[i].ljust(max_lengths[i]) for i in range(len(headers))]))
-    print("-" * sum(max_lengths))
-
-    for row in rows:
-        columns = row.split(";")
-    print("|".join([columns[i].ljust(max_lengths[i]) for i in range(len(columns))]))
-
+    for row in range(len(table)):
+        full_row = ''
+        for col in range(len(headers)):
+            full_row += table[row][col].center(column_widths[col]) + '|'
+        print(full_row)
+        if row == 0:
+            print("-" * (sum(column_widths) + len(column_widths)))
+    print("")
 
 
 def get_input(label):
@@ -79,6 +82,7 @@ def get_inputs(labels):
     Args:
         labels: list - the list of the labels to be displayed before each prompt
     """
+    print("Please provide data: ")
     list_of_labels = []
     for label in labels:
         get_user_input = input(f"{label}: ")
