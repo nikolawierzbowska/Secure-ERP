@@ -2,7 +2,7 @@ from model.crm import crm
 from view import terminal as view
 
 HEADERS = crm.HEADERS
-data_base = crm.data_base
+# data_base = crm.data_base
 
 
 def list_customers():
@@ -10,17 +10,33 @@ def list_customers():
 
 
 def add_customer():
-    labels = HEADERS[1:]
-    new_customer = view.get_inputs(labels)
-    crm.create_customers_crm(data_base,new_customer)
+    new_customer = view.get_inputs(HEADERS[1:])
+    crm.create_customers_crm(new_customer)
+
+
+def get_unique_id():
+    id_customer_input =view.get_input(HEADERS[0])
+    return id_customer_input
 
 
 def update_customer():
-    view.print_error_message("Not implemented yet.")
+    id_customer = get_unique_id()
+    if not crm.is_customer_exist_crm(id_customer):
+        view.print_error_message("Not found that id ")
+        return
+    update_customer_info = view.get_inputs(HEADERS[1:])
+
+    crm.update_customer_crm(id_customer,update_customer_info)
+
+
 
 
 def delete_customer():
-    view.print_error_message("Not implemented yet.")
+#     # id_custom = get_unique_id()
+#     crm.delete_customer_crm(id_custom,data_base)
+    pass
+
+
 
 
 def get_subscribed_emails():
