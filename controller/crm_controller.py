@@ -1,13 +1,18 @@
 from model.crm import crm
 from view import terminal as view
 
+HEADERS = crm.HEADERS
+data_base = crm.data_base
+
 
 def list_customers():
-    view.print_error_message("Not implemented yet.")
+    view.print_table(crm.list_customers_crm(),HEADERS)
 
 
-def add_customer(): #wywołanie na funkcji view.get_inputs na labelach z pliku crm.py
-    view.print_error_message("Not implemented yet.")
+def add_customer():
+    labels = HEADERS[1:]
+    new_customer = view.get_inputs(labels)
+    crm.create_customers_crm(data_base,new_customer)
 
 
 def update_customer():

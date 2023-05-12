@@ -32,7 +32,8 @@ def print_general_results(result, label):
     lists/tuples (like "@label: \n  @item1; @item2"), and dictionaries
     (like "@label \n  @key1: @value1; @key2: @value2")
     """
-    pass
+    print(label)
+    print(result)
 
 
 # /--------------------------------\
@@ -42,12 +43,14 @@ def print_general_results(result, label):
 # |--------|------------|----------|
 # |   1    | Sidewinder | missile  |
 # \-----------------------------------/
-def print_table(table, headers):
+
+def print_table(table,headers):
     """Prints tabular data like above.
 
     Args:
         table: list of lists - the table to print out
     """
+
     column_widths = []
     for col in range(len(headers)):
         record_widths = []
@@ -63,6 +66,7 @@ def print_table(table, headers):
         if row == 0:
             print("-" * (sum(column_widths) + len(column_widths)))
     print("")
+
 
 def get_input(label):
     """Gets single string input from the user.

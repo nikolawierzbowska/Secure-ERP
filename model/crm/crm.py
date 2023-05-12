@@ -25,3 +25,5 @@ def create_customers_crm(table, record):
     record.insert(0, util.generate_id())
     table.append(record)
     data_manager.write_table_to_file(DATAFILE, table, ";")
+
+
