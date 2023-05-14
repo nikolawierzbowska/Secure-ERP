@@ -24,7 +24,8 @@ def list_customers_crm():
 
 def create_customers_crm( record):
     record.insert(0, util.generate_id())
-    update_list_of_customer = data_manager.read_table_from_file(DATAFILE).append(record)
+    update_list_of_customer = data_manager.read_table_from_file(DATAFILE)
+    update_list_of_customer.append(record)
     data_manager.write_table_to_file(DATAFILE, update_list_of_customer)
 
 
@@ -35,19 +36,23 @@ def is_customer_exist_crm(id_customer):
             return True
     return False
 
-def update_customer_crm(id_customer,customer_data):
+
+def update_customer_crm(id_customer, customer_data):
     customers = data_manager.read_table_from_file(DATAFILE)
     for index, customer in enumerate(customers):
         if id_customer == customer[0]:
             del customers[index]
-            create_customers_crm([id_customer] + customer_data)
-            return
+            customers.insert(index, [id_customer, *customer_data])
+    data_manager.write_table_to_file(DATAFILE, customers)
 
 
 
-
-def delete_customer_crm(id_customer,table):
-    pass
+def delete_customer_crm(id_customer):
+    customers = data_manager.read_table_from_file(DATAFILE)
+    for index, customer in enumerate(customers):
+        if id_customer == customer[0]:
+            del customers[index]
+    data_manager.write_table_to_file(DATAFILE, customers)
 
 
 def get_subscribed_emails_crm():

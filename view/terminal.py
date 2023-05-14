@@ -32,8 +32,15 @@ def print_general_results(result, label):
     lists/tuples (like "@label: \n  @item1; @item2"), and dictionaries
     (like "@label \n  @key1: @value1; @key2: @value2")
     """
-    print(label)
-    print(result)
+    result_type = type(result)
+    if result_type is float:
+        print(f"{label}: {result}")
+    elif result_type is list or tuple:
+        print(f"{label}: \n {result};")
+    elif result_type is dict:
+        print(f"{label} \n {result};")
+    # print(label)
+    # print(result)
 
 
 # /--------------------------------\

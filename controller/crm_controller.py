@@ -22,20 +22,19 @@ def get_unique_id():
 def update_customer():
     id_customer = get_unique_id()
     if not crm.is_customer_exist_crm(id_customer):
-        view.print_error_message("Not found that id ")
+        view.print_error_message("ID not found")
         return
     update_customer_info = view.get_inputs(HEADERS[1:])
 
     crm.update_customer_crm(id_customer,update_customer_info)
 
 
-
-
 def delete_customer():
-#     # id_custom = get_unique_id()
-#     crm.delete_customer_crm(id_custom,data_base)
-    pass
-
+    id_customer = get_unique_id()
+    if not crm.is_customer_exist_crm(id_customer):
+        view.print_error_message("ID not found")
+        return
+    crm.delete_customer_crm(id_customer)
 
 
 
