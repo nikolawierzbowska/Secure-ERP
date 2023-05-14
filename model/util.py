@@ -1,7 +1,7 @@
 import random
 
 
-def generate_id():
+def generate_id(table):
     number_of_special_chars = ["_", "+", "-", "!"]
     small_letters_list = [chr(random.randint(97, 122)) for _ in range(4)]
     capital_letters_list = [chr(random.randint(65, 90)) for _ in range(2)]
@@ -10,5 +10,9 @@ def generate_id():
     list_of_elements = small_letters_list + capital_letters_list + digits_list + special_chars_list
     shuffled_list = random.sample(list_of_elements, len(list_of_elements))
     generated_id = "".join(shuffled_list)
-    return generated_id
+    for row in table:
+        if row != generated_id:
+            return generated_id
+        else:
+            return generate_id
 

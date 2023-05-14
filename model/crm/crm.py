@@ -17,19 +17,20 @@ HEADERS = ["id", "name", "email", "subscribed"]
 
 
 def list_customers_crm():
-    data_base = data_manager.read_table_from_file(DATAFILE)
-    data_base.insert(0, HEADERS)
-    return data_base
+    customer_base = data_manager.read_table_from_file(DATAFILE)
+    customer_base.insert(0, HEADERS)
+    return customer_base
 
 
-def create_customers_crm( record):
-    record.insert(0, util.generate_id())
+def create_customers_crm(record):
+    customer_base = data_manager.read_table_from_file(DATAFILE)
+    record.insert(0, util.generate_id(customer_base))
     update_list_of_customer = data_manager.read_table_from_file(DATAFILE)
     update_list_of_customer.append(record)
     data_manager.write_table_to_file(DATAFILE, update_list_of_customer)
 
 
-def is_customer_exist_crm(id_customer):
+def is_customer_existing_crm(id_customer):
     customers = data_manager.read_table_from_file(DATAFILE)
     for customer in customers:
         if id_customer == customer[0]:
@@ -56,4 +57,9 @@ def delete_customer_crm(id_customer):
 
 
 def get_subscribed_emails_crm():
-    pass
+    customers = data_manager.read_table_from_file(DATAFILE)
+    subscribed_customers_list = []
+    for customer in customers:
+        if customer[3] == "1":
+            subscribed_customers_list.append(customer[2])
+    return subscribed_customers_list

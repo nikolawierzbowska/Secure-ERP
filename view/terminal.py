@@ -36,9 +36,9 @@ def print_general_results(result, label):
     if result_type is float:
         print(f"{label}: {result}")
     elif result_type is list or tuple:
-        print(f"{label}: \n {result};")
+        print(f"{label}: \n {result}")
     elif result_type is dict:
-        print(f"{label} \n {result};")
+        print(f"{label} \n {result}")
     # print(label)
     # print(result)
 

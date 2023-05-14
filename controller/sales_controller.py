@@ -1,29 +1,49 @@
 from model.sales import sales
 from view import terminal as view
 
+HEADERS = sales.HEADERS
 
 def list_transactions():
-    view.print_error_message("Not implemented yet.")
+    view.print_table(sales.list_transactions_sales(), HEADERS)
 
 
 def add_transaction():
-    view.print_error_message("Not implemented yet.")
+    new_transaction = view.get_inputs(HEADERS[1:])
+    sales.add_transaction_sales(new_transaction)
+
+
+def get_unique_id():
+    id_transaction_input = view.get_input(HEADERS[0])
+    return id_transaction_input
 
 
 def update_transaction():
-    view.print_error_message("Not implemented yet.")
+    id_transaction = get_unique_id()
+    if not sales.is_transaction_existing_sales(id_transaction):
+        view.print_error_message("ID not found")
+        return
+    update_transaction_info = view.get_inputs(HEADERS[1:])
+
+    sales.update_transaction_sales(id_transaction, update_transaction_info)
 
 
 def delete_transaction():
-    view.print_error_message("Not implemented yet.")
+    id_transaction = get_unique_id()
+    if not sales.is_transaction_existing_sales(id_transaction):
+        view.print_error_message("ID not found")
+        return
+    sales.delete_transaction_sales(id_transaction)
+    view.print_message(f"Transaction {id_transaction} has been removed.")
 
 
 def get_biggest_revenue_transaction():
-    view.print_error_message("Not implemented yet.")
+    highest_revenue = sales.get_biggest_revenue_in_sales()
+    view.print_general_results(highest_revenue, "Transaction with highest revenue")
 
 
 def get_biggest_revenue_product():
-    view.print_error_message("Not implemented yet.")
+    biggest_product_revenue = sales.biggest_revenue_in_product_sales()
+    view.print_general_results(biggest_product_revenue, "Product with biggest revenue")
 
 
 def count_transactions_between():

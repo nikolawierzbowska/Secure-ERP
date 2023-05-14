@@ -6,7 +6,7 @@ HEADERS = crm.HEADERS
 
 
 def list_customers():
-    view.print_table(crm.list_customers_crm(),HEADERS)
+    view.print_table(crm.list_customers_crm(), HEADERS)
 
 
 def add_customer():
@@ -15,13 +15,13 @@ def add_customer():
 
 
 def get_unique_id():
-    id_customer_input =view.get_input(HEADERS[0])
+    id_customer_input = view.get_input(HEADERS[0])
     return id_customer_input
 
 
 def update_customer():
     id_customer = get_unique_id()
-    if not crm.is_customer_exist_crm(id_customer):
+    if not crm.is_customer_existing_crm(id_customer):
         view.print_error_message("ID not found")
         return
     update_customer_info = view.get_inputs(HEADERS[1:])
@@ -31,15 +31,20 @@ def update_customer():
 
 def delete_customer():
     id_customer = get_unique_id()
-    if not crm.is_customer_exist_crm(id_customer):
+    if not crm.is_customer_existing_crm(id_customer):
         view.print_error_message("ID not found")
         return
     crm.delete_customer_crm(id_customer)
+    view.print_message(f"Customer {id_customer} has been removed.")
 
 
 
 def get_subscribed_emails():
-    view.print_error_message("Not implemented yet.")
+    subscribed_emails = crm.get_subscribed_emails_crm()
+    if not subscribed_emails:
+        view.print_error_message("No active subscribtions found")
+    else:
+        view.print_general_results(subscribed_emails, HEADERS[2])
 
 
 def run_operation(option):
