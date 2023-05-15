@@ -1,7 +1,9 @@
 from model.sales import sales
 from view import terminal as view
+import datetime
 
 HEADERS = sales.HEADERS
+
 
 def list_transactions():
     view.print_table(sales.list_transactions_sales(), HEADERS)
@@ -46,12 +48,31 @@ def get_biggest_revenue_product():
     view.print_general_results(biggest_product_revenue, "Product with biggest revenue")
 
 
+def validate_dates():
+    view.print_message("Enter the dates in YYYY-MM-DD format: ")
+    while True:
+        try:
+            date = view.get_input(HEADERS[4])
+            if datetime.datetime.strptime(date, '%Y-%m-%d'):
+                return date
+            else:
+                continue
+        except ValueError:
+            view.print_message("Invalid date format. Please use YYYY-MM-DD format")
+
+
 def count_transactions_between():
-    view.print_error_message("Not implemented yet.")
+    date_1 = validate_dates()
+    date_2 = validate_dates()
+    number_of_transactions =sales.count_transactions_between_sales(date_1,date_2)
+    view.print_general_results(number_of_transactions,"The number of transactions between two dates")
 
 
 def sum_transactions_between():
-    view.print_error_message("Not implemented yet.")
+    date_1 = validate_dates()
+    date_2 = validate_dates()
+    sum_the_price_of_transactions = sales.sum_transactions_between_sales(date_1, date_2)
+    view.print_general_results(sum_the_price_of_transactions,"Sum the price of transactions between two dates")
 
 
 def run_operation(option):

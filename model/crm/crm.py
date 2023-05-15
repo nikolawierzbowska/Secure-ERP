@@ -14,8 +14,6 @@ DATAFILE = "model/crm/crm.csv"
 HEADERS = ["id", "name", "email", "subscribed"]
 
 
-
-
 def list_customers_crm():
     customer_base = data_manager.read_table_from_file(DATAFILE)
     customer_base.insert(0, HEADERS)
@@ -45,7 +43,6 @@ def update_customer_crm(id_customer, customer_data):
             del customers[index]
             customers.insert(index, [id_customer, *customer_data])
     data_manager.write_table_to_file(DATAFILE, customers)
-
 
 
 def delete_customer_crm(id_customer):

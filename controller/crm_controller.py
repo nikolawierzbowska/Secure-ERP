@@ -2,7 +2,7 @@ from model.crm import crm
 from view import terminal as view
 
 HEADERS = crm.HEADERS
-# data_base = crm.data_base
+
 
 
 def list_customers():
@@ -25,7 +25,6 @@ def update_customer():
         view.print_error_message("ID not found")
         return
     update_customer_info = view.get_inputs(HEADERS[1:])
-
     crm.update_customer_crm(id_customer,update_customer_info)
 
 
@@ -36,7 +35,6 @@ def delete_customer():
         return
     crm.delete_customer_crm(id_customer)
     view.print_message(f"Customer {id_customer} has been removed.")
-
 
 
 def get_subscribed_emails():
