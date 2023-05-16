@@ -1,21 +1,54 @@
 from model.hr import hr
 from view import terminal as view
+import datetime
+
+
+HEADERS = hr.HEADERS
 
 
 def list_employees():
-    view.print_error_message("Not implemented yet.")
+    view.print_table(hr.list_employees_hr(),HEADERS)
+
+
+def validate_dates():
+    view.print_message("Enter the dates in YYYY-MM-DD format: ")
+    while True:
+        try:
+            date = view.get_input(HEADERS[2])
+            if datetime.datetime.strptime(date, '%Y-%m-%d'):
+                return date
+            else:
+                continue
+        except ValueError:
+            view.print_message("Invalid date format. Please use YYYY-MM-DD format")
 
 
 def add_employee():
-    view.print_error_message("Not implemented yet.")
+    new_employee = view.get_inputs(HEADERS[1:])
+    hr.add_employee_hr(new_employee)
+
+
+def get_unique_id_employee():
+    id_employee_input =view.get_input(HEADERS[0])
+    return id_employee_input
 
 
 def update_employee():
-    view.print_error_message("Not implemented yet.")
+    id_employee = get_unique_id_employee()
+    if not hr.is_employee_existing_hr(id_employee):
+        view.print_error_message("ID not found")
+        return
+    update_employee_info = view.get_inputs(HEADERS[1:])
+    hr.update_employee_hr(id_employee,update_employee_info)
 
 
 def delete_employee():
-    view.print_error_message("Not implemented yet.")
+    id_employee = get_unique_id_employee()
+    if not hr.is_employee_existing_hr(id_employee):
+        view.print_error_message("ID not found")
+        return
+    hr.delete_employee_hr(id_employee)
+    view.print_message(f"Employee {id_employee} has been removed.")
 
 
 def get_oldest_and_youngest():
@@ -23,7 +56,9 @@ def get_oldest_and_youngest():
 
 
 def get_average_age():
-    view.print_error_message("Not implemented yet.")
+    average_age =hr.get_average_age_hr()
+    view.print_general_results(average_age,"The average age of employees")
+
 
 
 def next_birthdays():
