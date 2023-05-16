@@ -56,6 +56,36 @@ def delete_employee_hr(id_employee):
 def get_oldest_and_youngest():
     pass
 
+# def min_max():
+#     employees = data_manager.read_table_from_file(DATAFILE)
+#     date_format = '%Y-%m-%d'
+#     birth_dates = []
+#     for employee in employees:
+#         birth_date = employee[2]
+#         birth_dates.append(birth_date)
+#     birth_dates = [datetime.strptime(date, date_format) for date in birth_dates]
+#     youngest_employee = max(birth_dates)
+#     oldest_employee = min(birth_dates)
+#     return youngest_employee, oldest_employee
+# [11:21 PM]
+# to jest ten zakomentowany z którego chyba ostatecznie nie korzystamy
+# [11:21 PM]
+# działa tylko przy imporcie datetime
+# [11:22 PM]
+# def get_oldest_and_youngest_hr():
+#     employees = data_manager.read_table_from_file(DATAFILE)
+#     persons_dates_1 = []
+#     for employee in employees:
+#         person_date_int = int(employee[2][0:4])
+#         person_month_int = int(employee[2][5:7])
+#         person_day_int = int(employee[2][8:10])
+#         personsdates = [person_date_int, person_month_int, person_day_int]
+#         persons_dates_1.append(personsdates)
+#     print(persons_dates_1)
+#     print(max(persons_dates_1))
+#     print(min(persons_dates_1))
+
+
 
 def get_average_age_hr():
     employees = data_manager.read_table_from_file(DATAFILE)
