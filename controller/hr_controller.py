@@ -19,7 +19,8 @@ def delete_employee():
 
 
 def get_oldest_and_youngest():
-    view.print_error_message("Not implemented yet.")
+    employee1_and_2 = hr.get_oldest_and_youngest_hr()
+    view.print_general_results(employee1_and_2, "Oldest and youngest employee")
 
 
 def get_average_age():
