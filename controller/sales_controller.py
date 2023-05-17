@@ -32,17 +32,13 @@ def validate_dates():
             view.print_message("Invalid date format. Please use YYYY-MM-DD format")
 
 
-def get_header():
-    new_transaction = []
-    new_transaction.append(view.get_input(HEADERS[1]))
-    new_transaction.append(view.get_input(HEADERS[2]))
-    new_transaction.append(validate_price())
-    new_transaction.append(validate_dates())
+def get_information_about_transaction():
+    new_transaction = [view.get_input(HEADERS[1]), view.get_input(HEADERS[2]), validate_price(), validate_dates()]
     return new_transaction
 
 
 def add_transaction():
-    new_transaction = get_header()
+    new_transaction = get_information_about_transaction()
     sales.add_transaction_sales(new_transaction)
 
 
@@ -56,7 +52,7 @@ def update_transaction():
     if not sales.is_transaction_existing_sales(id_transaction):
         view.print_error_message("ID not found")
         return
-    update_transaction_info = get_header()
+    update_transaction_info = get_information_about_transaction()
     sales.update_transaction_sales(id_transaction, update_transaction_info)
 
 

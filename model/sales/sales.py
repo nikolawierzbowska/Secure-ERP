@@ -22,8 +22,7 @@ def list_transactions_sales():
 
 
 def add_transaction_sales(record):
-    transaction_base = data_manager.read_table_from_file(DATAFILE)
-    record.insert(0, util.generate_id(transaction_base))
+    record.insert(0, util.generate_id())
     update_list_of_transactions = data_manager.read_table_from_file(DATAFILE)
     update_list_of_transactions.append(record)
     data_manager.write_table_to_file(DATAFILE, update_list_of_transactions)

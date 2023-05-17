@@ -19,13 +19,13 @@ def validate_subscription():
             continue
 
 
-def get_header():
+def get_information_about_customer():
     new_customer = [view.get_input(HEADERS[1]), view.get_input(HEADERS[2]), validate_subscription()]
     return new_customer
 
 
 def add_customer():
-    new_customer = get_header()
+    new_customer = get_information_about_customer()
     crm.create_customers_crm(new_customer)
 
 
@@ -39,7 +39,7 @@ def update_customer():
     if not crm.is_customer_existing_crm(id_customer):
         view.print_error_message("ID not found")
         return
-    update_customer_info = get_header()
+    update_customer_info = get_information_about_customer()
     crm.update_customer_crm(id_customer, update_customer_info)
 
 

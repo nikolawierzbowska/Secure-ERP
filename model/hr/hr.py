@@ -7,6 +7,8 @@ Data table structure:
     - department (string)
     - clearance level (int): from 0 (lowest) to 7 (highest)
 """
+from datetime import datetime
+from datetime import timedelta
 
 from model import data_manager, util
 
@@ -21,8 +23,7 @@ def list_employees_hr():
 
 
 def add_employee_hr(record):
-    employees_base = data_manager.read_table_from_file(DATAFILE)
-    record.insert(0, util.generate_id(employees_base))
+    record.insert(0, util.generate_id())
     update_list_of_employees = data_manager.read_table_from_file(DATAFILE)
     update_list_of_employees.append(record)
     data_manager.write_table_to_file(DATAFILE, update_list_of_employees)
@@ -53,43 +54,21 @@ def delete_employee_hr(id_employee):
     data_manager.write_table_to_file(DATAFILE, employees)
 
 
-def get_oldest_and_youngest():
+def get_oldest_and_youngest_hr():
     employees = data_manager.read_table_from_file(DATAFILE)
-    list_of_clearance = []
+    list_of_dates = []
     for employee in employees:
-        if int(employee[4]):
-            list_of_clearance.append(employee[4])
-    return len(list_of_clearance)
-
-
-# def min_max():
-#     employees = data_manager.read_table_from_file(DATAFILE)
-#     date_format = '%Y-%m-%d'
-#     birth_dates = []
-#     for employee in employees:
-#         birth_date = employee[2]
-#         birth_dates.append(birth_date)
-#     birth_dates = [datetime.strptime(date, date_format) for date in birth_dates]
-#     youngest_employee = max(birth_dates)
-#     oldest_employee = min(birth_dates)
-#     return youngest_employee, oldest_employee
-# [11:21 PM]
-# to jest ten zakomentowany z którego chyba ostatecznie nie korzystamy
-# [11:21 PM]
-# działa tylko przy imporcie datetime
-# [11:22 PM]
-# def get_oldest_and_youngest_hr():
-#     employees = data_manager.read_table_from_file(DATAFILE)
-#     persons_dates_1 = []
-#     for employee in employees:
-#         person_date_int = int(employee[2][0:4])
-#         person_month_int = int(employee[2][5:7])
-#         person_day_int = int(employee[2][8:10])
-#         personsdates = [person_date_int, person_month_int, person_day_int]
-#         persons_dates_1.append(personsdates)
-#     print(persons_dates_1)
-#     print(max(persons_dates_1))
-#     print(min(persons_dates_1))
+        dates = employee[2].replace("-", "")
+        list_of_dates.append(int(dates))
+    list_of_names_y = None
+    list_of_names_o = None
+    for index, employee in enumerate(employees):
+        if list_of_dates.index(min(list_of_dates)) == index:
+            list_of_names_o = employee[1]
+        elif list_of_dates.index(max(list_of_dates)) == index:
+            list_of_names_y = employee[1]
+    names = list_of_names_o, list_of_names_y
+    return tuple(names)
 
 
 def get_average_age_hr():
@@ -106,15 +85,23 @@ def get_average_age_hr():
     return average_age_of_employees
 
 
-def next_birthdays_hr():
-    pass
+def next_birthdays_hr(get_dates):
+    employees = data_manager.read_table_from_file(DATAFILE)
+    start_date = datetime.strptime(get_dates, "%Y-%m-%d")
+    end_date = start_date + timedelta(days=14)
+
+    list_of_names = []
+    for employee in employees:
+        if start_date <= datetime.strptime(employee[2], "%Y-%m-%d") <= end_date:
+            list_of_names.append(employee[1])
+    return list_of_names
 
 
-def count_employees_with_clearance_hr():
+def count_employees_with_clearance_hr(get_clearance):
     employees = data_manager.read_table_from_file(DATAFILE)
     list_of_clearance = []
     for employee in employees:
-        if int(employee[4]) > 0:
+        if get_clearance <= employee[4]:
             list_of_clearance.append(employee[4])
     return len(list_of_clearance)
 

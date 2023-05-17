@@ -13,7 +13,7 @@ def validate_dates():
     view.print_message("Enter the dates in YYYY-MM-DD format: ")
     while True:
         try:
-            date = view.get_input(HEADERS[2])
+            date = view.get_input("Provide the date")
             if datetime.datetime.strptime(date, '%Y-%m-%d'):
                 return date
             else:
@@ -33,17 +33,13 @@ def validate_clearance():
             continue
 
 
-def get_header():
-    new_employee = []
-    new_employee.append(view.get_input(HEADERS[1]))
-    new_employee.append(validate_dates())
-    new_employee.append(view.get_input(HEADERS[3]))
-    new_employee.append(validate_clearance())
+def get_information_about_employee():
+    new_employee = [view.get_input(HEADERS[1]), validate_dates(), view.get_input(HEADERS[3]), validate_clearance()]
     return new_employee
 
 
 def add_employee():
-    new_employee = get_header()
+    new_employee = get_information_about_employee()
     hr.add_employee_hr(new_employee)
 
 
@@ -57,7 +53,7 @@ def update_employee():
     if not hr.is_employee_existing_hr(id_employee):
         view.print_error_message("ID not found")
         return
-    update_employee_info = get_header()
+    update_employee_info = get_information_about_employee()
     hr.update_employee_hr(id_employee, update_employee_info)
 
 
@@ -81,13 +77,21 @@ def get_average_age():
 
 
 def next_birthdays():
-    view.print_error_message("Not implemented yet.")
+    get_dates = validate_dates()
+    names = hr.next_birthdays_hr(get_dates)
+    if not names:
+        view.print_message("No data")
+        return
+    view.print_general_results(names, "Names of employees who have birthdays within two weeks")
 
 
 def count_employees_with_clearance():
-    number_employees_clearance = hr.count_employees_with_clearance_hr()
-    view.print_general_results(number_employees_clearance,
-                               "The number of employees who have at least the input clearance level")
+    get_clearance = validate_clearance()
+    if not get_clearance:
+        view.print_message("No data")
+        return
+    number_employees_clearance = hr.count_employees_with_clearance_hr(get_clearance)
+    view.print_general_results(number_employees_clearance, f"The number of employees who have the clearance level {get_clearance} or more")
 
 
 def count_employees_per_department():
