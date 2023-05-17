@@ -4,13 +4,28 @@ from view import terminal as view
 HEADERS = crm.HEADERS
 
 
-
 def list_customers():
     view.print_table(crm.list_customers_crm(), HEADERS)
 
 
+def validate_subscription():
+    view.print_message("Enter the subscription status 0 or 1: ")
+    while True:
+        subscription = view.get_input(HEADERS[3])
+        if subscription in ["0", "1"]:
+            return subscription
+        else:
+            view.print_message("Invalid subscription status ")
+            continue
+
+
+def get_header():
+    new_customer = [view.get_input(HEADERS[1]), view.get_input(HEADERS[2]), validate_subscription()]
+    return new_customer
+
+
 def add_customer():
-    new_customer = view.get_inputs(HEADERS[1:])
+    new_customer = get_header()
     crm.create_customers_crm(new_customer)
 
 
@@ -24,8 +39,8 @@ def update_customer():
     if not crm.is_customer_existing_crm(id_customer):
         view.print_error_message("ID not found")
         return
-    update_customer_info = view.get_inputs(HEADERS[1:])
-    crm.update_customer_crm(id_customer,update_customer_info)
+    update_customer_info = get_header()
+    crm.update_customer_crm(id_customer, update_customer_info)
 
 
 def delete_customer():
@@ -40,9 +55,9 @@ def delete_customer():
 def get_subscribed_emails():
     subscribed_emails = crm.get_subscribed_emails_crm()
     if not subscribed_emails:
-        view.print_error_message("No active subscribtions found")
+        view.print_error_message("No active subscription found")
     else:
-        view.print_general_results(subscribed_emails, HEADERS[2])
+        view.print_general_results(subscribed_emails, "The emails of subscribed customers")
 
 
 def run_operation(option):

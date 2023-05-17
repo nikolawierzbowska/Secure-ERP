@@ -9,8 +9,40 @@ def list_transactions():
     view.print_table(sales.list_transactions_sales(), HEADERS)
 
 
+def validate_price():
+    while True:
+        price = view.get_input(HEADERS[3])
+        if price.isdigit():
+            return price
+        else:
+            view.print_message("Invalid price ")
+            continue
+
+
+def validate_dates():
+    view.print_message("Enter the dates in YYYY-MM-DD format: ")
+    while True:
+        try:
+            date = view.get_input(HEADERS[4])
+            if datetime.datetime.strptime(date, '%Y-%m-%d'):
+                return date
+            else:
+                continue
+        except ValueError:
+            view.print_message("Invalid date format. Please use YYYY-MM-DD format")
+
+
+def get_header():
+    new_transaction = []
+    new_transaction.append(view.get_input(HEADERS[1]))
+    new_transaction.append(view.get_input(HEADERS[2]))
+    new_transaction.append(validate_price())
+    new_transaction.append(validate_dates())
+    return new_transaction
+
+
 def add_transaction():
-    new_transaction = view.get_inputs(HEADERS[1:])
+    new_transaction = get_header()
     sales.add_transaction_sales(new_transaction)
 
 
@@ -24,8 +56,7 @@ def update_transaction():
     if not sales.is_transaction_existing_sales(id_transaction):
         view.print_error_message("ID not found")
         return
-    update_transaction_info = view.get_inputs(HEADERS[1:])
-
+    update_transaction_info = get_header()
     sales.update_transaction_sales(id_transaction, update_transaction_info)
 
 
@@ -48,31 +79,18 @@ def get_biggest_revenue_product():
     view.print_general_results(biggest_product_revenue, "Product with biggest revenue")
 
 
-def validate_dates():
-    view.print_message("Enter the dates in YYYY-MM-DD format: ")
-    while True:
-        try:
-            date = view.get_input(HEADERS[4])
-            if datetime.datetime.strptime(date, '%Y-%m-%d'):
-                return date
-            else:
-                continue
-        except ValueError:
-            view.print_message("Invalid date format. Please use YYYY-MM-DD format")
-
-
 def count_transactions_between():
     date_1 = validate_dates()
     date_2 = validate_dates()
-    number_of_transactions =sales.count_transactions_between_sales(date_1,date_2)
-    view.print_general_results(number_of_transactions,"The number of transactions between two dates")
+    number_of_transactions = sales.count_transactions_between_sales(date_1, date_2)
+    view.print_general_results(number_of_transactions, "The number of transactions between two dates")
 
 
 def sum_transactions_between():
     date_1 = validate_dates()
     date_2 = validate_dates()
     sum_the_price_of_transactions = sales.sum_transactions_between_sales(date_1, date_2)
-    view.print_general_results(sum_the_price_of_transactions,"Sum the price of transactions between two dates")
+    view.print_general_results(sum_the_price_of_transactions, "Sum the price of transactions between two dates")
 
 
 def run_operation(option):

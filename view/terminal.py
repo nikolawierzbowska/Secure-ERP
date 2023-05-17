@@ -49,7 +49,7 @@ def print_general_results(result, label):
 # |   1    | Sidewinder | missile  |
 # \-----------------------------------/
 
-def print_table(table,headers):
+def print_table(table, headers):
     """Prints tabular data like above.
 
     Args:
@@ -61,7 +61,7 @@ def print_table(table,headers):
         record_widths = []
         for row in range(len(table)):
             record_widths.append(len(table[row][col]))
-        column_widths.append(max(record_widths) +2 )
+        column_widths.append(max(record_widths) + 2)
 
     for row in range(len(table)):
         full_row = ''
@@ -88,7 +88,7 @@ def get_inputs(labels):
     Args:
         labels: list - the list of the labels to be displayed before each prompt
     """
-    print("Please provide data: ")
+    print("Please provide: ")
     list_of_labels = []
     for label in labels:
         get_user_input = input(f"{label}: ")

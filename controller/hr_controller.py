@@ -2,12 +2,11 @@ from model.hr import hr
 from view import terminal as view
 import datetime
 
-
 HEADERS = hr.HEADERS
 
 
 def list_employees():
-    view.print_table(hr.list_employees_hr(),HEADERS)
+    view.print_table(hr.list_employees_hr(), HEADERS)
 
 
 def validate_dates():
@@ -23,13 +22,33 @@ def validate_dates():
             view.print_message("Invalid date format. Please use YYYY-MM-DD format")
 
 
+def validate_clearance():
+    view.print_message("Enter the clearance from 0 to 7: ")
+    while True:
+        clearance = view.get_input(HEADERS[4])
+        if clearance in ["0", "1", "2", "3", "4", "5", "6", "7"]:
+            return clearance
+        else:
+            view.print_message("Invalid clearance ")
+            continue
+
+
+def get_header():
+    new_employee = []
+    new_employee.append(view.get_input(HEADERS[1]))
+    new_employee.append(validate_dates())
+    new_employee.append(view.get_input(HEADERS[3]))
+    new_employee.append(validate_clearance())
+    return new_employee
+
+
 def add_employee():
-    new_employee = view.get_inputs(HEADERS[1:])
+    new_employee = get_header()
     hr.add_employee_hr(new_employee)
 
 
 def get_unique_id_employee():
-    id_employee_input =view.get_input(HEADERS[0])
+    id_employee_input = view.get_input(HEADERS[0])
     return id_employee_input
 
 
@@ -38,8 +57,8 @@ def update_employee():
     if not hr.is_employee_existing_hr(id_employee):
         view.print_error_message("ID not found")
         return
-    update_employee_info = view.get_inputs(HEADERS[1:])
-    hr.update_employee_hr(id_employee,update_employee_info)
+    update_employee_info = get_header()
+    hr.update_employee_hr(id_employee, update_employee_info)
 
 
 def delete_employee():
@@ -56,9 +75,8 @@ def get_oldest_and_youngest():
 
 
 def get_average_age():
-    average_age =hr.get_average_age_hr()
-    view.print_general_results(average_age,"The average age of employees")
-
+    average_age = hr.get_average_age_hr()
+    view.print_general_results(average_age, "The average age of employees")
 
 
 def next_birthdays():
@@ -66,11 +84,14 @@ def next_birthdays():
 
 
 def count_employees_with_clearance():
-    view.print_error_message("Not implemented yet.")
+    number_employees_clearance = hr.count_employees_with_clearance_hr()
+    view.print_general_results(number_employees_clearance,
+                               "The number of employees who have at least the input clearance level")
 
 
 def count_employees_per_department():
-    view.print_error_message("Not implemented yet.")
+    number_of_employees_per_department = hr.count_employees_per_department()
+    view.print_general_results(number_of_employees_per_department, "The number of employees per department")
 
 
 def run_operation(option):

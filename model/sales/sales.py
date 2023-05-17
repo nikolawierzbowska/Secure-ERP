@@ -73,7 +73,7 @@ def biggest_revenue_in_product_sales():
         product = transaction[2]
         price = float(transaction[3])
         if product in transactions_in_product_revenue:
-            transactions_in_product_revenue[product] +=  price
+            transactions_in_product_revenue[product] += price
         else:
             transactions_in_product_revenue[product] = price
 
@@ -87,7 +87,7 @@ def biggest_revenue_in_product_sales():
     return product_with_highest_revenue
 
 
-def check_user_date(date_1,date_2):
+def check_user_date(date_1, date_2):
     transactions = data_manager.read_table_from_file(DATAFILE)
     date_format = '%Y-%m-%d'
     date_1_iso = datetime.strptime(date_1, date_format)
@@ -107,18 +107,17 @@ def check_user_date(date_1,date_2):
     return list_of_date
 
 
-def count_transactions_between_sales(date_1,date_2):
-    count_transactions_between_dates= check_user_date(date_1, date_2)
+def count_transactions_between_sales(date_1, date_2):
+    count_transactions_between_dates = check_user_date(date_1, date_2)
     return len(count_transactions_between_dates)
 
 
 def sum_transactions_between_sales(date_1, date_2):
     transactions = data_manager.read_table_from_file(DATAFILE)
     list_of_dates_between_dates = check_user_date(date_1, date_2)
-    list_of_price=[]
+    list_of_price = []
     for transaction in transactions:
         for date in list_of_dates_between_dates:
             if date == transaction[4]:
                 list_of_price.append(float(transaction[3]))
     return sum(list_of_price)
-

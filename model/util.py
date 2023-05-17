@@ -1,18 +1,15 @@
 import random
+import string
 
 
-def generate_id(table):
-    number_of_special_chars = ["_", "+", "-", "!"]
-    small_letters_list = [chr(random.randint(97, 122)) for _ in range(4)]
-    capital_letters_list = [chr(random.randint(65, 90)) for _ in range(2)]
-    digits_list = [str(random.randint(0, 10)) for _ in range(2)]
-    special_chars_list = [str(random.choice(number_of_special_chars)) for _ in range(2)]
-    list_of_elements = small_letters_list + capital_letters_list + digits_list + special_chars_list
-    shuffled_list = random.sample(list_of_elements, len(list_of_elements))
-    generated_id = "".join(shuffled_list)
-    for row in table:
-        if row != generated_id:
-            return generated_id
-        else:
-            return generate_id
-
+def generate_id(number_of_small_letters=4,
+                number_of_capital_letters=2,
+                number_of_digits=2,
+                number_of_special_chars=2,
+                allowed_specialchars=r"+-!"):
+    chars = random.choices(string.ascii_lowercase, k=number_of_small_letters) \
+            + random.choices(string.ascii_uppercase, k=number_of_capital_letters) \
+            + random.choices(string.digits, k=number_of_digits) \
+            + random.choices(allowed_specialchars, k=number_of_special_chars)
+    random.shuffle(chars)
+    return "".join(chars)
