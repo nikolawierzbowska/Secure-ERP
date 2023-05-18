@@ -41,6 +41,7 @@ def get_information_about_employee():
 def add_employee():
     new_employee = get_information_about_employee()
     hr.add_employee_hr(new_employee)
+    view.print_message(f"New employee {new_employee} has been added.")
 
 
 def get_unique_id_employee():
@@ -49,15 +50,18 @@ def get_unique_id_employee():
 
 
 def update_employee():
+    view.print_table(hr.list_employees_hr(), HEADERS)
     id_employee = get_unique_id_employee()
     if not hr.is_employee_existing_hr(id_employee):
         view.print_error_message("ID not found")
         return
     update_employee_info = get_information_about_employee()
     hr.update_employee_hr(id_employee, update_employee_info)
+    view.print_message(f"New employee {id_employee} has been updated.")
 
 
 def delete_employee():
+    view.print_table(hr.list_employees_hr(), HEADERS)
     id_employee = get_unique_id_employee()
     if not hr.is_employee_existing_hr(id_employee):
         view.print_error_message("ID not found")
@@ -91,7 +95,8 @@ def count_employees_with_clearance():
         view.print_message("No data")
         return
     number_employees_clearance = hr.count_employees_with_clearance_hr(get_clearance)
-    view.print_general_results(number_employees_clearance, f"The number of employees who have the clearance level {get_clearance} or more")
+    view.print_general_results(number_employees_clearance,
+                               f"The number of employees who have the clearance level {get_clearance} or more")
 
 
 def count_employees_per_department():

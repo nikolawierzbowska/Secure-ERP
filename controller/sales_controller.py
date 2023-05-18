@@ -9,14 +9,29 @@ def list_transactions():
     view.print_table(sales.list_transactions_sales(), HEADERS)
 
 
+def get_customer_id():
+    id_customer_input = view.get_input(HEADERS[1])
+    return id_customer_input
+
+
+def validate_customer_id():
+    while True:
+        id_customer = get_customer_id()
+        if not sales.is_customer_id_existing_sales(id_customer):
+            view.print_error_message("ID not found")
+            continue
+        return id_customer
+
+
 def validate_price():
     while True:
-        price = view.get_input(HEADERS[3])
-        if price.isdigit():
-            return price
-        else:
+        try:
+            price = view.get_input(HEADERS[3])
+            price = float(price)
+            return str(price)
+        except ValueError:
             view.print_message("Invalid price ")
-            continue
+        # continue
 
 
 def validate_dates():
@@ -33,13 +48,15 @@ def validate_dates():
 
 
 def get_information_about_transaction():
-    new_transaction = [view.get_input(HEADERS[1]), view.get_input(HEADERS[2]), validate_price(), validate_dates()]
+    new_transaction = [validate_customer_id(), view.get_input(HEADERS[2]), validate_price(), validate_dates()]
     return new_transaction
 
 
 def add_transaction():
+    view.print_table(sales.list_transactions_sales(), HEADERS)
     new_transaction = get_information_about_transaction()
     sales.add_transaction_sales(new_transaction)
+    view.print_message(f"Transaction {new_transaction} has been added.")
 
 
 def get_unique_id():
@@ -48,15 +65,18 @@ def get_unique_id():
 
 
 def update_transaction():
+    view.print_table(sales.list_transactions_sales(), HEADERS)
     id_transaction = get_unique_id()
     if not sales.is_transaction_existing_sales(id_transaction):
         view.print_error_message("ID not found")
         return
     update_transaction_info = get_information_about_transaction()
     sales.update_transaction_sales(id_transaction, update_transaction_info)
+    view.print_message(f"Transaction {id_transaction} has been updated.")
 
 
 def delete_transaction():
+    view.print_table(sales.list_transactions_sales(), HEADERS)
     id_transaction = get_unique_id()
     if not sales.is_transaction_existing_sales(id_transaction):
         view.print_error_message("ID not found")

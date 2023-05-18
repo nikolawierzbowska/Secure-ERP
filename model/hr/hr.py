@@ -77,11 +77,11 @@ def get_average_age_hr():
     for employee in employees:
         list_of_years.append(int(employee[2][0:4]))
     sum_age_employees = 0
-    current_year = 2023
+    current_year = datetime.now().year
     for year in list_of_years:
         age_employee = current_year - year
         sum_age_employees += age_employee
-    average_age_of_employees = int(sum_age_employees / (len(list_of_years)))
+    average_age_of_employees = round(int(sum_age_employees / (len(list_of_years))))
     return average_age_of_employees
 
 

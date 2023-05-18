@@ -28,6 +28,14 @@ def add_transaction_sales(record):
     data_manager.write_table_to_file(DATAFILE, update_list_of_transactions)
 
 
+def is_customer_id_existing_sales(id_customer):
+    transactions = data_manager.read_table_from_file(DATAFILE)
+    for transaction in transactions:
+        if id_customer == transaction[1]:
+            return True
+    return False
+
+
 def is_transaction_existing_sales(id_sales):
     transactions = data_manager.read_table_from_file(DATAFILE)
     for transaction in transactions:
@@ -114,9 +122,14 @@ def count_transactions_between_sales(date_1, date_2):
 def sum_transactions_between_sales(date_1, date_2):
     transactions = data_manager.read_table_from_file(DATAFILE)
     list_of_dates_between_dates = check_user_date(date_1, date_2)
-    list_of_price = []
+    date_and_price = {}
+
     for transaction in transactions:
-        for date in list_of_dates_between_dates:
-            if date == transaction[4]:
-                list_of_price.append(float(transaction[3]))
-    return sum(list_of_price)
+        date = transaction[4]
+        price = float(transaction[3])
+        if date in list_of_dates_between_dates:
+            if date in date_and_price:
+                date_and_price[date] += price
+            else:
+                date_and_price[date] = price
+    return sum(date_and_price.values())

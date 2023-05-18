@@ -27,6 +27,7 @@ def get_information_about_customer():
 def add_customer():
     new_customer = get_information_about_customer()
     crm.create_customers_crm(new_customer)
+    view.print_message(f"Customer {new_customer} has been added.")
 
 
 def get_unique_id():
@@ -35,15 +36,18 @@ def get_unique_id():
 
 
 def update_customer():
+    view.print_table(crm.list_customers_crm(), HEADERS)
     id_customer = get_unique_id()
     if not crm.is_customer_existing_crm(id_customer):
         view.print_error_message("ID not found")
         return
     update_customer_info = get_information_about_customer()
     crm.update_customer_crm(id_customer, update_customer_info)
+    view.print_message(f"Customer {id_customer} has been updated.")
 
 
 def delete_customer():
+    view.print_table(crm.list_customers_crm(), HEADERS)
     id_customer = get_unique_id()
     if not crm.is_customer_existing_crm(id_customer):
         view.print_error_message("ID not found")
