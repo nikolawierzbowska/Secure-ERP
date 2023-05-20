@@ -49,7 +49,7 @@ def print_general_results(result, label):
 # |   1    | Sidewinder | missile  |
 # \-----------------------------------/
 
-def print_table(table, headers):
+def print_table(table,headers):
     """Prints tabular data like above.
 
     Args:
