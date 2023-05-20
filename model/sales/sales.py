@@ -84,13 +84,8 @@ def biggest_revenue_in_product_sales():
         else:
             transactions_in_product_revenue[product] = price
 
-    highest_revenue = 0
-    product_with_highest_revenue = None
-
-    for product, revenue in transactions_in_product_revenue.items():
-        if revenue > highest_revenue:
-            highest_revenue = revenue
-            product_with_highest_revenue = product
+    highest_revenue = max(transactions_in_product_revenue.values())
+    product_with_highest_revenue = next(key for key, value in transactions_in_product_revenue.items() if value == highest_revenue)
     return product_with_highest_revenue
 
 
