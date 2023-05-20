@@ -70,6 +70,7 @@ def get_biggest_revenue_in_sales():
     for transaction in transactions:
         if float(transaction[3]) == biggest_revenue:
             return transaction
+# jeden for
 
 
 def biggest_revenue_in_product_sales():
@@ -85,7 +86,8 @@ def biggest_revenue_in_product_sales():
             transactions_in_product_revenue[product] = price
 
     highest_revenue = max(transactions_in_product_revenue.values())
-    product_with_highest_revenue = next(key for key, value in transactions_in_product_revenue.items() if value == highest_revenue)
+    product_with_highest_revenue = next(
+        key for key, value in transactions_in_product_revenue.items() if value == highest_revenue)
     return product_with_highest_revenue
 
 

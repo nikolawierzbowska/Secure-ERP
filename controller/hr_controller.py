@@ -14,8 +14,8 @@ def validate_dates():
     while True:
         try:
             date = view.get_input("Provide the date")
-            if datetime.datetime.strptime(date, '%Y-%m-%d') and datetime.datetime.strptime(date,
-                                                                                           '%Y-%m-%d').date() <= datetime.datetime.now().date():
+            if datetime.datetime.strptime(date, '%Y-%m-%d') and \
+                    datetime.datetime.strptime(date,'%Y-%m-%d').date() <= datetime.datetime.now().date():
                 return date
             else:
                 view.print_message("Enter the dates in YYYY-MM-DD format: ")
@@ -28,7 +28,7 @@ def validate_clearance():
     view.print_message("Enter the clearance from 0 to 7: ")
     while True:
         clearance = view.get_input(HEADERS[4])
-        if clearance in ["0", "1", "2", "3", "4", "5", "6", "7"]:
+        if int(clearance) in range(8):
             return clearance
         else:
             view.print_message("Invalid clearance ")
