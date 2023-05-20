@@ -1,1 +1,2 @@
 Jest ekstra, polecanko
+W sumie to jest tylko OK
