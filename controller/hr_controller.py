@@ -1,41 +1,109 @@
 from model.hr import hr
 from view import terminal as view
+import datetime
+
+HEADERS = hr.HEADERS
 
 
 def list_employees():
-    view.print_error_message("Not implemented yet.")
+    view.print_table(hr.list_employees_hr(), HEADERS)
+
+
+def validate_dates():
+    view.print_message("Enter the dates in YYYY-MM-DD format: ")
+    while True:
+        try:
+            date = view.get_input("Provide the date")
+            if datetime.datetime.strptime(date, '%Y-%m-%d') and \
+                    datetime.datetime.strptime(date,'%Y-%m-%d').date() <= datetime.datetime.now().date():
+                return date
+            else:
+                view.print_message("Enter the dates in YYYY-MM-DD format: ")
+                continue
+        except ValueError:
+            view.print_message("Invalid date format. Please use YYYY-MM-DD format")
+
+
+def validate_clearance():
+    view.print_message("Enter the clearance from 0 to 7: ")
+    while True:
+        clearance = view.get_input(HEADERS[4])
+        if int(clearance) in range(8):
+            return clearance
+        else:
+            view.print_message("Invalid clearance ")
+            continue
+
+
+def get_information_about_employee():
+    new_employee = [view.get_input(HEADERS[1]), validate_dates(), view.get_input(HEADERS[3]), validate_clearance()]
+    return new_employee
 
 
 def add_employee():
-    view.print_error_message("Not implemented yet.")
+    new_employee = get_information_about_employee()
+    hr.add_employee_hr(new_employee)
+    view.print_message(f"New employee {new_employee} has been added.")
+
+
+def get_unique_id_employee():
+    id_employee_input = view.get_input(HEADERS[0])
+    return id_employee_input
 
 
 def update_employee():
-    view.print_error_message("Not implemented yet.")
+    view.print_table(hr.list_employees_hr(), HEADERS)
+    id_employee = get_unique_id_employee()
+    if not hr.is_employee_existing_hr(id_employee):
+        view.print_error_message("ID not found")
+        return
+    update_employee_info = get_information_about_employee()
+    hr.update_employee_hr(id_employee, update_employee_info)
+    view.print_message(f"New employee {id_employee} has been updated.")
 
 
 def delete_employee():
-    view.print_error_message("Not implemented yet.")
+    view.print_table(hr.list_employees_hr(), HEADERS)
+    id_employee = get_unique_id_employee()
+    if not hr.is_employee_existing_hr(id_employee):
+        view.print_error_message("ID not found")
+        return
+    hr.delete_employee_hr(id_employee)
+    view.print_message(f"Employee {id_employee} has been removed.")
 
 
 def get_oldest_and_youngest():
-    view.print_error_message("Not implemented yet.")
+    employee1_and_2 = hr.get_oldest_and_youngest_hr()
+    view.print_general_results(employee1_and_2, "Oldest and youngest employee")
 
 
 def get_average_age():
-    view.print_error_message("Not implemented yet.")
+    average_age = hr.get_average_age_hr()
+    view.print_general_results(average_age, "The average age of employees")
 
 
 def next_birthdays():
-    view.print_error_message("Not implemented yet.")
+    get_dates = validate_dates()
+    names = hr.next_birthdays_hr(get_dates)
+    if not names:
+        view.print_message("No data")
+        return
+    view.print_general_results(names, "Names of employees who have birthdays within two weeks")
 
 
 def count_employees_with_clearance():
-    view.print_error_message("Not implemented yet.")
+    get_clearance = validate_clearance()
+    if not get_clearance:
+        view.print_message("No data")
+        return
+    number_employees_clearance = hr.count_employees_with_clearance_hr(get_clearance)
+    view.print_general_results(number_employees_clearance,
+                               f"The number of employees who have the clearance level {get_clearance} or more")
 
 
 def count_employees_per_department():
-    view.print_error_message("Not implemented yet.")
+    number_of_employees_per_department = hr.count_employees_per_department()
+    view.print_general_results(number_of_employees_per_department, "The number of employees per department")
 
 
 def run_operation(option):
